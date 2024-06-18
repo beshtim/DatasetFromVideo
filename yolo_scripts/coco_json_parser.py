@@ -279,9 +279,9 @@ class CamerasDataParser:
                     _double_image_ids.append(image['id'])
 
             for annotation in data['annotations']:
-                new_image_id = _old_to_new_image_ids[annotation['image_id']]
+                new_image_id_ann = _old_to_new_image_ids[annotation['image_id']]
 
-                if new_image_id in _double_image_ids:
+                if new_image_id_ann in _double_image_ids:
                     continue
 
                 category_name = int_to_category_name[annotation['category_id']]
@@ -290,12 +290,13 @@ class CamerasDataParser:
                 else:
                     annotation['category_id'] = category_name_to_id[category_name]
 
-                annotation['image_id'] = new_image_id
+                annotation['image_id'] = new_image_id_ann
 
                 annotation['id'] = new_annotation_id
                 new_annotation_id += 1
 
                 united_json_data['annotations'].append(annotation)
+            new_image_id += 1
 
         print()
         print('Num of doubled images in annotations: {}'.format(
